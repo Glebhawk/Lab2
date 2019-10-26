@@ -1,0 +1,7 @@
+D:\Projects\C#\Suitcase\Suitcase\bin\Debug\Suitcase.exe.config
+D:\Projects\C#\Suitcase\Suitcase\bin\Debug\Suitcase.exe
+D:\Projects\C#\Suitcase\Suitcase\bin\Debug\Suitcase.pdb
+D:\Projects\C#\Suitcase\Suitcase\obj\Debug\Suitcase.csprojAssemblyReference.cache
+D:\Projects\C#\Suitcase\Suitcase\obj\Debug\Suitcase.csproj.CoreCompileInputs.cache
+D:\Projects\C#\Suitcase\Suitcase\obj\Debug\Suitcase.exe
+D:\Projects\C#\Suitcase\Suitcase\obj\Debug\Suitcase.pdb
