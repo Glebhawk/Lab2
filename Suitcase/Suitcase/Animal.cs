@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Suitcase
+﻿namespace Suitcase
 {
     class Animal
     {
@@ -16,7 +10,14 @@ namespace Suitcase
         public Animal(string n, string s)
         {
             name = n;
-            sex = s;
+            if (s == "ч")
+            {
+                sex = "m";
+            }
+            else if (s == "ж")
+            {
+                sex = "f";
+            }
         }
 
         public virtual string Voice()
@@ -24,6 +25,8 @@ namespace Suitcase
             return "";
         }
     }
+
+    // There are seven classes for seven species of animals
 
     class Lion : Animal 
     {
@@ -142,7 +145,7 @@ namespace Suitcase
         {
             if (sex == "m")
             {
-                return "ООЕЕ! Мене звуть " + name + ", я олень!";
+                return "ООЕЕ! Мене звуть " + name + ", я олень!"; // What?
             }
             else
             {

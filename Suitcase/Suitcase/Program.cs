@@ -1,8 +1,7 @@
-﻿using System;
+﻿// What is better? To use switch or seven constructor classes?
+// Anyway, now your work begins.
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Suitcase
 {
@@ -10,29 +9,20 @@ namespace Suitcase
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Запуск програми.");
-            Console.InputEncoding = System.Text.Encoding.Unicode;
-            Biologist biologist = new Biologist();
-            bool execute = true;
-            do {
+            Console.WriteLine("Запуск програми.");                
+            Console.InputEncoding = System.Text.Encoding.Unicode; // We use this to get access to ukraianian "і"
+            bool execute;                                         // for the glory of Ukraine!
+            do {                             // This is main cycle of program.
                 PrintOptoins();
                 Console.WriteLine("");
-                GetKey(biologist, execute);
-            } while (execute);
-            Console.ReadKey();
+                execute = GetKey();
+            } while (execute);               // It ends only when we press esc.
             }
 
-        public static void PrintOptoins()
+        public static void PrintOptoins() //We print options for our biologist.
         {
             Console.WriteLine("");
-            if (Case.dayTime.time == "day")
-            {
-                Console.WriteLine("У валiзi зараз день. Що ви хочете зробити?");
-            }
-            else
-            {
-                Console.WriteLine("У валiзi зараз нiч. Що ви хочете зробити?");
-            }
+            Console.WriteLine(Case.dayTime.GetTime());
             Console.WriteLine("1. Додати кiмнату.");
             Console.WriteLine("2. Додати вольєр.");
             Console.WriteLine("3. Додати пасовище.");
@@ -45,16 +35,16 @@ namespace Suitcase
             Console.WriteLine("Esc. Завершити роботу.");
         }
 
-        public static void GetKey(Biologist biologist,  bool execute)
+        public static bool GetKey() //This method gets key and tells other classes what to do.
         {
             ConsoleKeyInfo cki = Console.ReadKey(true);
             if (cki.Key == ConsoleKey.Escape)
             {
-                execute = false;
-                Console.WriteLine("Завершення роботи.");
+                Console.WriteLine("Завершення роботи."); // When escape is pressed, we have to stop the main cycle.
+                return false;                            // That's why we return bool.
             }
             char key = cki.KeyChar;
-            switch (key)
+            switch (key)            //We use switch to decide, what to do.
             {
                 case '1':
                     {
@@ -76,49 +66,37 @@ namespace Suitcase
                     }
                 case '4':
                     {
+                        // We have to collect data about animal we want to create.
                         Console.WriteLine("Введiть вид нової тварини. Використовуйте слова \"лев\", \"тигр\", \"вовк\", \"собака\", \"кiт\", \"олень\", \"кiнь\".");
                         string species = Console.ReadLine().ToLower().Trim();
                         Console.WriteLine("Введiть стать нової тварини. Будь ласка, використовуйте букви \"ч\" або \"ж\".");
                         string sex = Console.ReadLine().ToLower().Trim();
                         Console.WriteLine("Введiть iм'я нової тварини.");
                         string name = Console.ReadLine();
-                        Console.WriteLine(biologist.AddAnimal(name, species, sex));
+                        Console.WriteLine(Biologist.AddAnimal(name, species, sex));
+                        // In case of sucess biologist returns string "Animal added".
+                        // Else long chain of objects passes to him string from object, where mistake appeared.
                         break;
                     }
                 case '5':
                     {
-                        Case.dayTime.Change();
-                        if (Case.dayTime.time == "day")
-                        {
-                            Console.WriteLine("У валiзi настав день!");
-                        }
-                        else
-                        {
-                            Console.WriteLine("У валiзi настала нiч!");
-                        }
+                        Console.WriteLine(Case.dayTime.Change());
                         break;
                     }
                 case '6':
                     {
                         Console.WriteLine("Введiть iм'я тварини, яку хочете покликати.");
                         string name = Console.ReadLine().Trim();
-                        List<string> list = biologist.CallByName(name);
-                        if (list.Count == 0)
+                        List<string> list = Biologist.CallByName(name);
+                        foreach (string str in list)
                         {
-                            Console.WriteLine("На жаль, такої тварини немає.");
-                        }
-                        else
-                        {
-                            foreach (string str in list)
-                            {
-                                Console.WriteLine(str);
-                            }
+                            Console.WriteLine(str);
                         }
                         break;
                     }
                 case '7':
                     {
-                        List<string> list = biologist.CallEveryone();
+                        List<string> list = Biologist.CallEveryone();
                         foreach (string str in list)
                         {
                             Console.WriteLine(str);
@@ -127,20 +105,20 @@ namespace Suitcase
                     }
                 case '8':
                     {
-                        Console.WriteLine("Загальне добове споживання їжi: "+ biologist.CalculateAllFood() + " кг на день.");
+                        Console.WriteLine("Загальне добове споживання їжi: "+ Biologist.CalculateAllFood() + " кг на день.");
                         break;
                     }
                 case '9':
                     {
-                        Console.WriteLine("Середнє добове споживання їжi на тварину: " + biologist.CalculateAvgFood() + " кг на день.");
+                        Console.WriteLine("Середнє добове споживання їжi на тварину: " + Biologist.CalculateAvgFood() + " кг на день.");
                         break;
                     }
                 default:
                     {
-                        GetKey(biologist, execute);
                         break;
                     }
             }
+            return true;
         }
     }
 }

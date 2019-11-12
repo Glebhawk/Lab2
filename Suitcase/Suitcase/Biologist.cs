@@ -1,171 +1,87 @@
-﻿using System;
+﻿// This is class to perform all oprations and requests with animals.
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Suitcase
 {
-    class Biologist
+    static class Biologist
     {
-        public List<string> CallEveryone()
+        static Habitat habitat = new Habitat();
+        public static List<string> CallEveryone()
         {
-            List<string> list = new List<string>();
-            Case.dayTime.CallEveryone(list);
-            return list;
+            List<string> list = new List<string>(); // Each animal returns string when called. We collect all strings to list.
+            Case.dayTime.CallEveryone(list);        // Animals sleep at night. That`s why we use method of DayTime instead of
+            return list;                            // calling them directly.
         }
 
-        public List<string> CallByName(string name)
+        public static List<string> CallByName(string name)
         {
-            List<string> list = Case.room.Call(name);
-            list.AddRange(Case.pasture.Call(name));
-            return list;
+            List<string> list = Case.room.Call(name); // Animals called by name answer even at night.
+            list.AddRange(Case.pasture.Call(name));   // That`s why we can call them directly.
+            if (list.Count == 0)
+            {
+                list.Add("На жаль, такої тварини немає.");
+            }
+            return list;                              // We return list, because there can be many animals with same names.
         }
 
-        public void Change()
+        public static void Change()
         {
-            Case.dayTime.Change();
+            Case.dayTime.Change(); // This changes day for night or vice versa.
         }
 
-        public double CalculateAllFood()
+        public static double CalculateAllFood()
         {
-            double food = 0.0;
-            food += Case.room.GetFood();
-            food += Case.pasture.GetFood();
-            return food;
+            return habitat.GetFood();
         }
 
-        public double CalculateAvgFood()
+        public static double CalculateAvgFood()
         {
-            double avgFood = 0.0;
-            avgFood += Case.room.GetAvgFood();
-            avgFood += Case.pasture.GetAvgFood();
-            return avgFood;
+            return habitat.GetAvgFood();
         }
 
-        public string AddAnimal(string name, string species, string sex)
+        public static string AddAnimal(string name, string species, string sex)
         {
             Animal animal;
+            if (sex != "ч" && sex != "ж")
+            {
+                return "Неможливо визначити стать, будь ласка, використовуйте букви \"ч\" або \"ж\".";
+            }
             switch(species)
             {
                 case ("лев"):
                     {
-                        if (sex == "ч")
-                        {
-                            animal = new Lion(name, "m");
-                            break;
-                        }
-                        else if (sex == "ж")
-                        {
-                            animal = new Lion(name, "s");
-                            break;
-                        } 
-                        else
-                        {
-                            return "Неможливо визначити стать, будь ласка, використовуйте букви \"ч\" або \"ж\".";
-                        }
+                        animal = new Lion(name, sex);
+                        break;
                     }
                 case ("тигр"):
                     {
-                        if (sex == "ч")
-                        {
-                            animal = new Tiger(name, "m");
-                            break;
-                        }
-                        else if (sex == "ж")
-                        {
-                            animal = new Tiger(name, "s");
-                            break;
-                        }
-                        else
-                        {
-                            return "Неможливо визначити стать, будь ласка, використовуйте букви \"ч\" або \"ж\".";
-                        }
+                        animal = new Tiger(name, sex);
+                        break;
                     }
                 case ("вовк"):
                     {
-                        if (sex == "ч")
-                        {
-                            animal = new Wolf(name, "m");
-                            break;
-                        }
-                        else if (sex == "ж")
-                        {
-                            animal = new Wolf(name, "s");
-                            break;
-                        }
-                        else
-                        {
-                            return "Неможливо визначити стать, будь ласка, використовуйте букви \"ч\" або \"ж\".";
-                        }
+                        animal = new Wolf(name, sex);
+                        break;
                     }
                 case ("кіт"):
                     {
-                        if (sex == "ч")
-                        {
-                            animal = new Cat(name, "m");
-                            break;
-                        }
-                        else if (sex == "ж")
-                        {
-                            animal = new Cat(name, "s");
-                            break;
-                        }
-                        else
-                        {
-                            return "Неможливо визначити стать, будь ласка, використовуйте букви \"ч\" або \"ж\".";
-                        }
+                        animal = new Cat(name, sex);
+                        break;
                     }
                 case ("собака"):
                     {
-                        if (sex == "ч")
-                        {
-                            animal = new Dog(name, "m");
-                            break;
-                        }
-                        else if (sex == "ж")
-                        {
-                            animal = new Dog(name, "s");
-                            break;
-                        }
-                        else
-                        {
-                            return "Неможливо визначити стать, будь ласка, використовуйте букви \"ч\" або \"ж\".";
-                        }
+                        animal = new Dog(name, sex);
+                        break;
                     }
                 case ("олень"):
                     {
-                        if (sex == "ч")
-                        {
-                            animal = new Deer(name, "m");
-                            break;
-                        }
-                        else if (sex == "ж")
-                        {
-                            animal = new Deer(name, "s");
-                            break;
-                        }
-                        else
-                        {
-                            return "Неможливо визначити стать, будь ласка, використовуйте букви \"ч\" або \"ж\".";
-                        }
+                        animal = new Deer(name, sex);
+                        break;
                     }
                 case ("кінь"):
                     {
-                        if (sex == "ч")
-                        {
-                            animal = new Horse(name, "m");
-                            break;
-                        }
-                        else if (sex == "ж")
-                        {
-                            animal = new Horse(name, "s");
-                            break;
-                        }
-                        else
-                        {
-                            return "Неможливо визначити стать. Будь ласка, використовуйте букви \"ч\" або \"ж\".";
-                        }
+                        animal = new Horse(name, sex);
+                        break;
                     }
                 default:
                     {
@@ -173,7 +89,6 @@ namespace Suitcase
                         return "Неможливо визначити вид. Будь ласка, використовуйте слова \"лев\", \"тигр\", \"вовк\", \"собака\", \"кiт\", \"олень\", \"кiнь\".";
                     }
             }
-            Habitat habitat = new Habitat();
             return habitat.Add(animal);
         }
     }
