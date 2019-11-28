@@ -1,6 +1,6 @@
 ﻿namespace Suitcase
 {
-    class Animal
+    public class Animal
     {
         public string species { get; protected set; }
         public string name { get; protected set; }
@@ -26,9 +26,9 @@
         }
     }
 
-    // There are seven classes for seven species of animals
+    // Є сім классів для семи видів тварин.
 
-    class Lion : Animal 
+    public class Lion : Animal 
     {
         public Lion(string n, string s) : base(n, s)
         {
@@ -49,7 +49,7 @@
         }
     }
 
-    class Tiger : Animal
+    public class Tiger : Animal
     {
         public Tiger(string n, string s) : base(n, s)
         {
@@ -70,7 +70,7 @@
         }
     }
 
-    class Wolf : Animal
+    public class Wolf : Animal
     {
         public Wolf(string n, string s) : base(n, s)
         {
@@ -91,7 +91,7 @@
         }
     }
 
-    class Cat : Animal
+    public class Cat : Animal
     {
         public Cat(string n, string s) : base(n, s)
         {
@@ -112,7 +112,7 @@
         }
     }
 
-    class Dog : Animal
+    public class Dog : Animal
     {
         public Dog(string n, string s) : base(n, s)
         {
@@ -133,7 +133,7 @@
         }
     }
 
-    class Deer : Animal
+    public class Deer : Animal
     {
         public Deer(string n, string s) : base(n, s)
         {
@@ -145,7 +145,7 @@
         {
             if (sex == "m")
             {
-                return "ООЕЕ! Мене звуть " + name + ", я олень!"; // What?
+                return "ООЕЕ! Мене звуть " + name + ", я олень!"; // Що?
             }
             else
             {
@@ -154,7 +154,7 @@
         }
     }
 
-    class Horse : Animal
+    public class Horse : Animal
     {
         public Horse(string n, string s) : base(n, s)
         {

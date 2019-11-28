@@ -1,13 +1,13 @@
-﻿// This is our main storage for rooms, pastures and statement day/night
+﻿// Це статичний клас для всіх кімнат, пасовищ, тварин і циклу день/ніч. 
 namespace Suitcase
 {
-    static class Case
+    public static class Case
     {
-        public static Room room = new Room();          // This is actually list. I could have used normal lists and foreach, but
-        public static Pasture pasture = new Pasture(); // I had to implement chain of responsibility
+        public static Room room = new Room();          // Взагалі то це список. Ми могли б використовувати нормальні списки і цикл 
+        public static Pasture pasture = new Pasture(); // foreach, але ми мусили використати паттерн "Ланцюжок обов'язків".
         public static DayTime dayTime = new Day();
     }
 }
-// You can rework it into real lists, for this you have to move logic from Habitat and it`s subclasses
-// to biologist, where you will make it all anew with cycles and without chain of responsibility.
-// OR you can save chain logic and use lists for everything else! I should try it myself.
+//В принципі, це можна переробити в справжні списки, для цього треба будеперенести всю логіку з Habitat і підклассів
+// в Biologist, де доведеться зробити її заново через цикли і без ланцюжка обов'язків.
+// АБО можна спробувати зберегти логіку ланцюжка і використовувати списки і foreach для всього іншого! Ми спробуємо зробити це самі.

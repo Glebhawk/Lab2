@@ -1,16 +1,16 @@
-﻿// Pasture is a habitat for horses and deers.
+﻿// Пасовище це середовище проживання для коней і оленів.
 using System.Collections.Generic;
 
 namespace Suitcase
 {
-    class Pasture : Habitat
+    public class Pasture : Habitat
     {
-        Pasture pasture;
+        public Pasture pasture { get; set; }
 
         public override string Add(Animal animal)
         {
-            if (animals.Count >= 20) // One pasture can contain up to 20 animals.
-            {                        // There are no other restrictions. Horses and deers don`t eat each other, do they?
+            if (animals.Count >= 20) // На одному пасовищі живе до 20 тварин.
+            {                        // Інших обмежень немає. Коні і олені ж не їдять один одного, так?
                 if (pasture == null)
                 {
                     return "Неможливо заселити тварину! Немає вiльних пасовиськ!";
@@ -27,7 +27,7 @@ namespace Suitcase
             }
         }
 
-        public void BuildPasture()
+        public virtual void BuildPasture()
         {
             if (pasture != null)
             {

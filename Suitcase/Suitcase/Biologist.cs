@@ -1,32 +1,32 @@
-﻿// This is class to perform all oprations and requests with animals.
+﻿// Це клас для того, щоб проводити всі запити і операції з тваринами.
 using System.Collections.Generic;
 
 namespace Suitcase
 {
-    static class Biologist
+    public static class Biologist
     {
-        static Habitat habitat = new Habitat();
+        public static Habitat habitat { get; private set; } = new Habitat();
         public static List<string> CallEveryone()
         {
-            List<string> list = new List<string>(); // Each animal returns string when called. We collect all strings to list.
-            Case.dayTime.CallEveryone(list);        // Animals sleep at night. That`s why we use method of DayTime instead of
-            return list;                            // calling them directly.
+            List<string> list = new List<string>(); // Кожна тварина відповідає на заклик текстовим рядком. Ми збираємо всі рядки в список.
+            Case.dayTime.CallEveryone(list);        // Вночі тварини сплять. Тому ми використовуємо метод у класі DayTime замість того,
+            return list;                            // щоб кликати тварин.
         }
 
         public static List<string> CallByName(string name)
         {
-            List<string> list = Case.room.Call(name); // Animals called by name answer even at night.
-            list.AddRange(Case.pasture.Call(name));   // That`s why we can call them directly.
+            List<string> list = Case.room.Call(name); // Тварини, що були покликані по імені, відповідають навіть уночі.
+            list.AddRange(Case.pasture.Call(name));   // Тому ми можемо кликати їх напряму.
             if (list.Count == 0)
             {
                 list.Add("На жаль, такої тварини немає.");
             }
-            return list;                              // We return list, because there can be many animals with same names.
+            return list;                              // Ми повертаємо список, бо у нас можуть бути тварини з однаковими іменами.
         }
 
         public static void Change()
         {
-            Case.dayTime.Change(); // This changes day for night or vice versa.
+            Case.dayTime.Change(); // Міняє день на ніч, або навпаки.
         }
 
         public static double CalculateAllFood()

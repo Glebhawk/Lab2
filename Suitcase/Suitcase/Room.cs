@@ -1,13 +1,13 @@
-﻿// Room is one of habitats for animals.
+﻿// Кімната це багатофункціональне середовище проживання для тварин.
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Suitcase
 {
-    class Room : Habitat
+    public class Room : Habitat
     {
-        Volary volary; // Room can contain up to 4 volaries. Actually, this is list.
-        Room room;     // Room contains reference for next room in "list".
+        public Volary volary { get; set; }  // Кімната може містити до 4 вольєрів. Насправді, це теж список.
+        public Room room { get; set; }     // Кімната містить посилання на наступну кімнату в "списку".
 
         public override string Add(Animal animal)
         {
@@ -33,52 +33,60 @@ namespace Suitcase
                     {
                         return AddDog(animal);
                     }
-                default: // If this animal is horse or deer, we can`t add it to room.
+                default: // Кінь або олень не можуть жити в кімнаті.
                     {
                         return "Цю тварину неможливо заселити у кімнату!";
                     }
             }
         }
 
-        public string buildVolary()
+        public string BuildVolary()
         {
             if (volary != null)
             {
-                int count = 0;
-                count = volary.Count();
-                if (count < 4)
+                if (volary.Count() < 4)
                 {
-                    volary.buildVolary(); // We can`t have more than four volaries in one room.
+                    volary.buildVolary(); // Ми не можемо збудувати більше чотирьох вольєрів у кімнаті.
+                    return "Новий вольер збудовано.";
                 }
                 else if (room != null)
                 {
-                    room.buildVolary();   // We delegate creation of volaries to another room, if it exists.
+                    room.BuildVolary();   // Ми передаємо заадвння збудувати вольєр іншій кімнаті, якщо вона існує.
+                    return "Новий вольер збудовано.";
                 }
                 else
                 {
                     return "Неможливо збудувати вольєр! Немає вiльної кімнати!";
                 }
             }
-            else if (animals.Count() > 0) // Also room should not be already occupied.
+            else if (animals.Count() > 0) // Також кімната не повинна бути вже зайнята.
             {
-                volary.buildVolary(); // If there are no volaries in this room, we can build it.
+                if (room != null)
+                {
+                    room.BuildVolary();
+                    return "Новий вольер збудовано.";
+                }
+                else
+                {
+                    return "Неможливо збудувати вольєр! Немає вiльної кімнати!";
+                }
             }
             else
             {
-                return "Неможливо збудувати вольєр! Немає вiльної кімнати!";
+                Volary volary = new Volary(); // Якщо у кімнаті ще немає вольєрів, ми можемо збудувати один.
+                return "Новий вольер збудовано.";
             }
-            return "Новий вольер збудовано.";
         }
 
-        public void buildRoom()
+        public void BuildRoom()
         {
             if (room != null)
             {
-                room.buildRoom(); // If next room in "list" already exists, we delegate creation of new room.
+                room.BuildRoom(); // Якщо наступна кімната у "списку" вже існує, ми наказуємо їй створити нову кімнату.
             }
             else
             {
-                room = new Room(); // If this room is last, we create it here.
+                room = new Room(); // Якщо ця кімната остання, ми створюємо нову кімнату тут.
             }
         }
 
@@ -86,35 +94,38 @@ namespace Suitcase
         {
             if (volary == null)
             {
-                return "Неможливо заселити тварину! Немає спецiального вольєра!";
-                // If there are no volaries in this room, THERE CLEARLY will be no volaries in the next one.
-                // So I don`t even bother asking.
+                return RedirectCarnivore(animal);
             }
             else
             {
-                string result = volary.Add(animal); // We try to add animal in volary.
+                string result = volary.Add(animal); // Ми намагаємося додати тварину у вольєр.
                 if (result == "Неможливо заселити тварину! Всi вольєри зайнятi!")
-                {   // It is possible, that all volaries are occupied.
-                    if (room == null)
-                    {
-                        return result; // If no more rooms left, we can`t do anything else.
-                    }
-                    else
-                    {
-                        return room.Add(animal); // We try to add animal into next room.
-                    }
+                {
+                    return RedirectCarnivore(animal);
                 }
                 else
                 {
-                    return result; // There was free volary and we successfully added animal.
+                    return result; // Вільний вольєр був знайдений і ми успішно додали тварину.
                 }
+            }
+        }
+
+        private string RedirectCarnivore(Animal animal)
+        {
+            if (room == null)
+            {
+                return "Неможливо заселити тварину! Немає спецiального вольєра!"; // Якщо ще одної вільної кімнати немає.
+            }
+            else
+            {
+                return room.Add(animal); // Якщо є, передаємо тварину туди.
             }
         }
 
         private string AddCat(Animal animal)
         {
             if (volary != null)
-            {   // Cats don`t need volaries. They just live in rooms WITHOUT volaries, because beasts scare them.
+            {   // Для котів не треба вольєрів, вле вони мають жити в кімнатах без вольєрів, бо дикі звірі їх лякають.
                 if (room != null)
                 {
                     return room.Add(animal);
@@ -125,7 +136,7 @@ namespace Suitcase
                 }
             }
             else
-            {   // Also cats can`t live together with dogs.
+            {   // Ще коти не можуть жити разом з собаками.
                 foreach (Animal an in animals)
                 {
                     if (an.species == "dog")
@@ -133,7 +144,7 @@ namespace Suitcase
                         return "Неможливо заселити кота! Немає вiльної кімнати!";
                     }
                 }
-                if (animals.Count >= 10) // We can`t add more than ten cats.
+                if (animals.Count >= 10) // Ми не можемо заселити більше 10 котів.
                 {
                     return room.Add(animal);
                 }
@@ -146,7 +157,7 @@ namespace Suitcase
         }
 
         private string AddDog(Animal animal)
-        {   // All rules for cats also act for dogs.
+        {   // Всі правила для котів поширюються і на собак.
             if (volary != null)
             {
                 if (room != null)
@@ -179,25 +190,25 @@ namespace Suitcase
             }
         }
 
-        public override List<string> Call() // Here we call all animals.
+        public override List<string> Call() // Тут ми кличемо всіх тварин.
         {
             List<string> list = new List<string>();
             foreach (Animal animal in animals)
             {
-                list.Add(animal.Voice()); // All animals fron room.
+                list.Add(animal.Voice()); // Усі тварини з кімнати по черзі подають голос.
             }
             if (room != null)
             {
-                list.AddRange(room.Call()); // All animals from next rooms.
+                list.AddRange(room.Call()); // Потім подають голос тварини з наступної кімнати.
             }
             if (volary != null)
             {
-                list.AddRange(volary.Call()); // All animals from volaries in this room.
+                list.AddRange(volary.Call()); // І нарешті тварини з вольєрів.
             }
             return list;
         }
 
-        public override List<string> Call(string name) // We call animal by name.
+        public override List<string> Call(string name) // Ми кличемо тварину по імені.
         {
             List<string> list = new List<string>();
             foreach (Animal animal in animals)
@@ -218,7 +229,7 @@ namespace Suitcase
             return list;
         }
 
-        public override double GetFood() // We have to know, how much food animals consume.
+        public override double GetFood() // Нам потрібно знати, як багато тварини їдять.
         {
             double food = 0.0;
             foreach (Animal animal in animals)
@@ -236,7 +247,7 @@ namespace Suitcase
             return food;
         }
 
-        public override int CountAnimals() // How many animals we settled.
+        public override int CountAnimals() // Скільки тварин живе в кімнатах.
         {
             int counter = 0;
             if (animals.Count() != 0)

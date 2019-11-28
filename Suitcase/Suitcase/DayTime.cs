@@ -1,23 +1,23 @@
-﻿// This is class for day/night state.
+﻿// Це клас-стан для циклу день/ніч.
 using System.Collections.Generic;
 
 namespace Suitcase
 {
-    class DayTime // Basic class contains only virtual methods
+    public class DayTime // Базовий клас, містить лише віртуальні методи.
     {
-        public virtual string Change() // To change day/night state.
+        public virtual string Change() // Метод для зміни стану.
         {
             return "";
         }
 
-        public virtual void CallEveryone(List<string> list) // To call animals.
+        public virtual void CallEveryone(List<string> list) // Метод, щоб кликати тварин.
         {
         }
 
-        public virtual string GetTime() { return ""; } // To show current time.
+        public virtual string GetTime() { return ""; } // Метод, що повертає час доби.
     }
 
-    class Day : DayTime
+    public class Day : DayTime
     {
         public override string Change()
         {
@@ -37,7 +37,7 @@ namespace Suitcase
         }
     }
 
-    class Night : DayTime
+    public class Night : DayTime
     {
         public override string Change()
         {

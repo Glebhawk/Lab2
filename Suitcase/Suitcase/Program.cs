@@ -1,5 +1,5 @@
-﻿// What is better? To use switch or seven constructor classes?
-// Anyway, now your work begins.
+﻿// Що краще, використовувати світч чи сім классів-конструкторів?
+// В будь-якому випадку, ваша робота починається тут.
 using System;
 using System.Collections.Generic;
 
@@ -10,16 +10,15 @@ namespace Suitcase
         static void Main(string[] args)
         {
             Console.WriteLine("Запуск програми.");                
-            Console.InputEncoding = System.Text.Encoding.Unicode; // We use this to get access to ukraianian "і"
-            bool execute;                                         // for the glory of Ukraine!
-            do {                             // This is main cycle of program.
-                PrintOptoins();
-                Console.WriteLine("");
-                execute = GetKey();
-            } while (execute);               // It ends only when we press esc.
+            Console.InputEncoding = System.Text.Encoding.Unicode; // Це нам потрібно, щоб розблокувати українську "і". Слава Україні!
+            bool execute;                                         // На виводі просто стоїть англійська "i".
+            do {                             // Це головний цикл програми.
+                PrintOptoins();              // Він друкує пункти меню
+                execute = GetKey();          // і чекає, поки користувач натисне клавішу.
+            } while (execute);               // Він переривається, коли ми натискаємо esc. "Ми". Користувач.
             }
 
-        public static void PrintOptoins() //We print options for our biologist.
+        public static void PrintOptoins() // Ми друкуємо опції для біолога.
         {
             Console.WriteLine("");
             Console.WriteLine(Case.dayTime.GetTime());
@@ -35,26 +34,26 @@ namespace Suitcase
             Console.WriteLine("Esc. Завершити роботу.");
         }
 
-        public static bool GetKey() //This method gets key and tells other classes what to do.
+        public static bool GetKey() // Цей метод зчитує натиснуту клавішу і вирішує, що робити.
         {
             ConsoleKeyInfo cki = Console.ReadKey(true);
             if (cki.Key == ConsoleKey.Escape)
             {
-                Console.WriteLine("Завершення роботи."); // When escape is pressed, we have to stop the main cycle.
-                return false;                            // That's why we return bool.
+                Console.WriteLine("Завершення роботи."); // Коли натиснуто esc, нам треба зупинити головний цикл.
+                return false;                            // Тому ми і повертаємо bool.
             }
             char key = cki.KeyChar;
-            switch (key)            //We use switch to decide, what to do.
-            {
+            switch (key)            // Ми використовуємо світч, щоб вирішити, що робити.
+            {                       // Да-да, це той самий ІІ на світчах.
                 case '1':
                     {
-                        Case.room.buildRoom();
+                        Case.room.BuildRoom();
                         Console.WriteLine("Ви збудували нову кiмнату!");
                         break;
                     }
                 case '2':
                     {
-                        Case.room.buildVolary();
+                        Case.room.BuildVolary();
                         Console.WriteLine("Ви збудували новий вольєр!");
                         break;
                     }
@@ -66,16 +65,16 @@ namespace Suitcase
                     }
                 case '4':
                     {
-                        // We have to collect data about animal we want to create.
+                        // Нам треба зібрати дані про тварину, яку ми хочемо створити.
                         Console.WriteLine("Введiть вид нової тварини. Використовуйте слова \"лев\", \"тигр\", \"вовк\", \"собака\", \"кiт\", \"олень\", \"кiнь\".");
                         string species = Console.ReadLine().ToLower().Trim();
                         Console.WriteLine("Введiть стать нової тварини. Будь ласка, використовуйте букви \"ч\" або \"ж\".");
                         string sex = Console.ReadLine().ToLower().Trim();
                         Console.WriteLine("Введiть iм'я нової тварини.");
                         string name = Console.ReadLine();
-                        Console.WriteLine(Biologist.AddAnimal(name, species, sex));
-                        // In case of sucess biologist returns string "Animal added".
-                        // Else long chain of objects passes to him string from object, where mistake appeared.
+                        Console.WriteLine(Biologist.AddAnimal(name, species, sex)); // Потім передати дані в потрібний метод.
+                        // У випадку успіху Biologist поверне рядок "Тварину додано!".
+                        // Інакше довгий ланцюг об'єктів передасть рядок, який вкаже користувачу, що не так.
                         break;
                     }
                 case '5':

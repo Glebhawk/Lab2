@@ -2,11 +2,11 @@
 
 namespace Suitcase
 {
-    class Habitat // is a basic class for all habitats. It contains mostly virtual methods.
+    public class Habitat // Це базовий клас для усіх середовищ проживання. Він містить переважно віртуальні методи.
     {
         public List<Animal> animals = new List<Animal>();
 
-        public virtual string Add(Animal animal) // We use this once to decide, where we will put newly created animal.
+        public virtual string Add(Animal animal) // Конкретно цей метод ми використовуємо для того, щоб вирішити, куди ми відправимо тварину.
         {
             if(animal.species == "horse" | animal.species == "deer")
             {
@@ -30,7 +30,7 @@ namespace Suitcase
             return list;
         }
 
-        public virtual double GetFood() // We use this to count, how much food the animals in rooms and on pastures eat.
+        public virtual double GetFood() // Ми хочемо знати, скільки тварини в кімнатах і на пасовищах їдять.
         {
             double food = 0.0;
             food += Case.room.GetFood();
@@ -38,7 +38,7 @@ namespace Suitcase
             return food;
         }
 
-        public virtual int CountAnimals() // We use this to count all the animals in rooms and on pastures.
+        public virtual int CountAnimals() // Ми рахуємо, скільки у нас є тварин.
         {
             int counter = 0;
             counter += Case.room.CountAnimals();
@@ -46,7 +46,7 @@ namespace Suitcase
             return counter;
         }
 
-        public double GetAvgFood() // We use this to count, how much food per animal we spend.
+        public double GetAvgFood() // Цей метод потрібен для того, щоб дізнатися, скільки в середньому їсть одна тварина.
         {
             double food = GetFood();
             return food / CountAnimals();

@@ -1,16 +1,16 @@
-﻿// Volary is a habitat for carnivorous beasts: lions, tigers, and somewhat weaker wolves.
+﻿// Вольєри це середовище проживання для хижих звірів: левів, тигрів і слабкіших вовків.
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Suitcase
 {
-    class Volary : Habitat
+    public class Volary : Habitat
     {
-        Volary volary;
+        public Volary volary { get; set; }
 
         public override string Add(Animal animal)
         {
-            if (animal.sex == "m")                     // We can`t add two males in one volary, or they will start to fight.
+            if (animal.sex == "m")                     // Ми не можемо додати у вольєр двох самців, інакше вони поб'ються.
             {
                 foreach (Animal an in animals)
                 {
@@ -22,12 +22,12 @@ namespace Suitcase
             }
             foreach (Animal an in animals)                
             {
-                if (an.species != animal.species)  // We can`t move tiger to lions or wolf to tigers.
+                if (an.species != animal.species)  // Ми не можемо тримати в одному вольєрі тварин разних видів.
                 {
                     return RedirectAnimal(animal);  
                 }
             }
-            if (volary.animals.Count() >= 4)       // We can`t have more than four carnivores in one volary.
+            if (animals.Count() >= 4)       // Ми не можемо поселити у один вольєр більше чотирьох тварин.
             {
                 return RedirectAnimal(animal);
             }
@@ -38,8 +38,8 @@ namespace Suitcase
             }
         }
 
-        private string RedirectAnimal(Animal animal) // Private method for redirecting animal to other volaries
-        {                                            // when this volary can`t handle it.
+        private string RedirectAnimal(Animal animal) // Метод для передачі тварин у інший вольєр,
+        {                                            // якщо цей вольєр не може її вмістити.
             if (volary != null)
             {
                 return volary.Add(animal);
@@ -121,8 +121,8 @@ namespace Suitcase
             return counter;
         }
 
-        public int Count() // Behaviour of room depends on how many volaries it contains.
-        {                  // This method allows us to count volaries like if they were in list.
+        public int Count() // Поведінка кімнати залежить від того, скільки вольєрів вона містить.
+        {                  // Цей метод дозволяє кімнаті рахувати вольєри так, типу вони у списку.
             int count = 1;
             if (volary != null)
             {
